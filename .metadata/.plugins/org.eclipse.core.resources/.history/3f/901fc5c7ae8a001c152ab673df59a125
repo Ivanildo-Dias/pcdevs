@@ -1,0 +1,31 @@
+package br.com.pcdevs.projeto.controller;
+
+import java.util.ArrayList;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+
+import br.com.pcdevs.projeto.dao.ContasDao;
+import br.com.pcdevs.projeto.model.Contas;
+
+@CrossOrigin
+@RestController
+public class ContasController {
+	
+	@Autowired
+	private ContasDao dao;
+	@GetMapping("/contas")
+	public ArrayList<Contas> recuperarTudo(){
+		ArrayList<Contas> lista;
+		lista = (ArrayList<Contas>)dao.findAll();
+		return lista;
+		}
+	
+	@GetMapping("/contas/{numero}")
+	public Contas recuperarContas(@PathVariable int numero) {
+		return dao.findById(numero).orElse(null);
+	}
+}
